@@ -18,21 +18,22 @@ Benefit Highlighting:
 
 Oh My Cal!拥有两种状态，平时它会悬挂在菜单栏上，当我们在非全屏模式下时，可以很容易从菜单栏呼出Oh My Cal!进行计算：
 
-Programmer模式：
+---
+
+`Programmer`模式：
 ![hangin-programmer1](http://i.imgbox.com/ePUmV26i.png)
 ![hangin-programmer2](http://i.imgbox.com/qHaTRDCI.png)
 
 ---
 
-Basic模式：
-
+`Basic`模式：
 
 ![hangin-basic1](http://i.imgbox.com/BMD684sp.png)
 ![hangin-basic2](http://i.imgbox.com/26ELMlZr.png)
 
 ---
 
-Scientific模式：
+`Scientific`模式：
 ![hangin-scientific1](http://i.imgbox.com/oe5KRk4o.png)
 ![hangin-scientific2](http://i.imgbox.com/iPvftgSp.png)
 
