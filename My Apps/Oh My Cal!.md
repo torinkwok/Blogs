@@ -25,6 +25,8 @@ Programmer模式：
 ---
 
 Basic模式：
+
+
 ![hangin-basic1](http://i.imgbox.com/BMD684sp.png)
 ![hangin-basic2](http://i.imgbox.com/26ELMlZr.png)
 
