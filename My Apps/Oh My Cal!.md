@@ -21,6 +21,7 @@ Oh My Cal!拥有两种状态，平时它会悬挂在菜单栏上，当我们在�
 ---
 
 `Programmer`模式：
+
 ![hangin-programmer1](http://i.imgbox.com/ePUmV26i.png)
 ![hangin-programmer2](http://i.imgbox.com/qHaTRDCI.png)
 
@@ -34,6 +35,7 @@ Oh My Cal!拥有两种状态，平时它会悬挂在菜单栏上，当我们在�
 ---
 
 `Scientific`模式：
+
 ![hangin-scientific1](http://i.imgbox.com/oe5KRk4o.png)
 ![hangin-scientific2](http://i.imgbox.com/iPvftgSp.png)
 
