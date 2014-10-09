@@ -22,13 +22,19 @@ Programmer模式：
 ![hangin-programmer1](http://i.imgbox.com/ePUmV26i.png)
 ![hangin-programmer2](http://i.imgbox.com/qHaTRDCI.png)
 
+---
+
 Basic模式：
 ![hangin-basic1](http://i.imgbox.com/BMD684sp.png)
 ![hangin-basic2](http://i.imgbox.com/26ELMlZr.png)
 
+---
+
 Scientific模式：
 ![hangin-scientific1](http://i.imgbox.com/oe5KRk4o.png)
 ![hangin-scientific2](http://i.imgbox.com/iPvftgSp.png)
+
+---
 
 但是这还不够方便，我想要的是能够随时随地（不管是在全屏的应用中或是在Dashboard中）都可以很方便地进行复杂的计算，所以Oh My Cal!还支持通过热键全局呼出：
 
