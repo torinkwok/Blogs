@@ -112,3 +112,46 @@ printf( "\n\n" );
     }
 @end // NSDate + GTDebugForNSDate
 ```
+上边这段代码看上去貌似是会导致infinite loop的递归调用，但实际上，我们之后会在运行时调用该方法之前交换`debug_dateWithString:`与`NSDate`内部的`dateWithString:`方法的实现，所以在上面代码中的
+
+```
+return [ self debug_dateWithString: _String ];
+```
+这行代码实际上会调用`dateWithString:`的实现，而非递归调用。而`debug_dateWithString:`方法本身实际上响应的是`dateWithString:`这个selector。
+
+下面开始调换它们的实现：
+
+```
+int main( int _Argc, char* const _Argv[] )
+    {
+    @autoreleasepool
+        {
+        Method classMethod__dateWithString = class_getClassMethod( [ NSDate class ], @selector( dateWithString: ) );
+        Method classMethod__debug_dateWithString = class_getClassMethod( [ NSDate class ], @selector( debug_dateWithString: ) );
+
+        method_exchangeImplementations( classMethod__dateWithString, classMethod__debug_dateWithString );
+        }
+
+    return 0;
+    }
+```
+
+这时`NSDate`的`dateWithString:`与我们自定义的`NSDate+GTDebugForDate`category中的`debug_dateWithString:`的实现已经互换，在main函数中测试一下：
+
+```
+NSDate* TongGuosBirthday = [ NSDate dateWithString: @"1997-01-28 19:22:34 +0600" ];
+NSLog( @"%@", TongGuosBirthday );
+```
+
+代码在运行时会向console打印如下内容：
+
+```
+2014-10-09 14:05:48.891 Term3[28347:303] Happy birthday, Tong Guo!
+2014-10-09 14:05:48.898 Term3[28347:303] 1997-01-28 13:22:34 +0000
+```
+
+没错，那句`Happy birthday, Tong Guo!`正是在`NSDate`的`dateWithString:`调用时打印的！我们已经成功地向黑盒方法中添加了自己的代码。这就是method swizzling技巧。
+
+利用method swizzling，开发者可以为那些”完全不知道具体实现的（completely opaque）黑盒方法增添log功能，这非常有助于调试！但是目前为止我只发现了其在调试中的作用，很少有情况需要在调试程序之外的场合中互换方法的实现。
+
+> 你问我Objective-C支不支持运行时交换方法实现，我说支持，我就明确告诉你这一点。但是什么时候用，也得按照实际情况来，对不对？你不能因为Objective-C中有这个特性，就一定要使用，明白这个意思吗？你们不要总想着这样很酷，就到处用，naive!
