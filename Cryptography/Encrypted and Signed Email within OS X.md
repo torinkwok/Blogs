@@ -202,4 +202,36 @@ Keychain Access 则没有这么多的区分，可以将任何类型的证书导�
 
 现在就可以使用 Thunderbird 加密和签名邮件了。首先，为你的邮箱账号设置数字签名（digital signing）时默认使用的 S/MIME 证书：
 
+![thunderbird-12](http://i.imgbox.com/ES0mIpXO.png)
 
+选择刚刚申请的 S/MIME 证书：
+
+![thunderbird-13](http://i.imgbox.com/iyamYrwV.png)
+
+是否想要为加密和签名使用相同的证书？选择是：
+
+![thunderbird-14](http://i.imgbox.com/U4x90sWg.png)
+
+现在已经同时为加密（Encryption）设置了与数字签名操作使用的相同的证书：
+
+![thunderbird-15](http://i.imgbox.com/AlIrVeT2.png)
+
+至于是否设置成`默认加密`和`默认签名`，以及两者的不同组合，那就看自己的口味了。
+
+现在像你平时使用 Thunderbird 那样撰写一封邮件：
+
+![thunderbird-16](http://i.imgbox.com/F5FjmPrr.png)
+
+同时选中 `Encrypt This Message` 和 `Digitally Sign This Message` 选项以同时加密和签名该邮件。加密和签名的状态会在右下角显示出来：
+
+![thunderbird-17](http://i.imgbox.com/j2jcBc4b.png)
+
+点击两个小图标以取消或选中。
+
+检查 esquiiire@gmail.com 的收件箱：
+
+![thunderbird-18](http://i.imgbox.com/FjDCCtQa.png)
+
+右上角的两个图标表示改该邮件在被发送之前进行了加密和签名。点击它们即可查看发送者的证书信息，并且可以查看邮件的签名状态，即：邮件被签名后，是否被人恶意或无意篡改：
+
+![thunderbird-19](http://i.imgbox.com/NG7SXQpO.png)
