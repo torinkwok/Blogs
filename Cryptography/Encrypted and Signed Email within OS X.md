@@ -1,3 +1,11 @@
+邮件安全尤其值得关注，我已经不止一次见到过对邮件**泄漏**，**篡改**或者**伪造**的抱怨，比如：
+
+![complain](http://i.imgbox.com/VSUkDubY.png)。
+
+不管你是什么职业，***学会使用加密邮件，并对邮件进行数字签名从而保证你的邮件不被接收者之外的人读取或恶意篡改***，是每个人应该掌握的技能。这篇文章介绍了在 OS X 上使用 S/MIME 证书对你的邮件进行加密（encrypt）和数字签名（digital signing），相较于使用 GnuPG 收发加密邮件而言，使用 S/MIME 证书对邮件进行加密和签名要更加轻量级，对 GnuPG 的支持还要额外安装插件。此外，移动设备几乎无法使用 GnuPG，很多人又有在移动设备上收发邮件的习惯，而 iOS 和 Android 自带的邮件客户端也内置了 S/MIME 的支持。
+
+关于“我已经不止一次见到过对邮件**泄漏**，**篡改**或者**伪造**的抱怨”，找到了一分存档：
+
 文章中提到的环境或工具：
 
 * OS X Mavericks
@@ -5,8 +13,6 @@
 * Mozilla Thunderbird 31.3.0
 * Apple Mail 7.3
 * Google Chrome 39.x
-
-相较于使用 GnuPG 收发加密邮件而言，使用 S/MIME 证书对邮件进行加密和签名要更加轻量级，因为大多数主流的邮件客户端都内置了对 S/MIME 的支持，而对 GnuPG 的支持还要额外安装插件。
 
 ## 向 CA 申请 S/MIME 证书
 如果你已经有了一个由受信任的 CA （如 VeriSign 或 DigiSign等）签发的 S/MIME 证书的话，可以跳过这一节。另外使用 Keychain Access 工具创建的 self-signed 证书只能用于签名邮件，而不能用于加密。
@@ -261,4 +267,5 @@ Keychain Access 则没有这么多的区分，可以将任何类型的证书导�
 如果你使用GnuPG的话，也可以给我发送加密数据，我的GnuPG公钥为 0x67B9E95236924648，你可以从公钥服务器上 retrieve 之。
 
 Blog: http://nstongg.tumblr.com
+
 GitHub: https://github.com/TongG
