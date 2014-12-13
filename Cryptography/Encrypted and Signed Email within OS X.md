@@ -254,6 +254,8 @@ Keychain Access 则没有这么多的区分，可以将任何类型的证书导�
 
 ## Contact Me
 
+我已经将文章中使用的截图打包，可以在[这里](https://www.dropbox.com/s/psc2d8v4gytnxa4/Using%20S%3AMIME%20within%20OS%20X_archive.zip?dl=0)下载。
+
 如果你遇到任何问题，你可以给我发送邮件：Tong-G@outlook.com 或者在 Twitter 上 DM 我：[@NSTongG](https://twitter.com/NSTongG)
 
 如果你使用GnuPG的话，也可以给我发送加密数据，我的GnuPG公钥为 0x67B9E95236924648，你可以从公钥服务器上 retrieve 之。
