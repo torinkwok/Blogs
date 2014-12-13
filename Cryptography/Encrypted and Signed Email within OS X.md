@@ -91,6 +91,8 @@ Okay，一切确认无误后，点击 `Next`，准备 collect 你自己的 S/MIM
 
 当构建了完整的信任链后，即可开始使用该 S/MIME 证书加密和签名邮件。
 
+这一节演示了在 Apple Mail 中使用 S/MIME 证书对邮件进行加密和签名，如果你是 Thunderbird 用户，并且对 Apple Mail 没有兴趣，可以跳过这一节。
+
 OS X 自带有一个 Mail 应用（由于 Mail 名称太过简洁，容易造成歧义，所以在下文中都采用 Mail.app 的名称指代），Mail.app 内置了对 S/MIME 加密的支持，使用 Mail.app 收发 S/MIME 加密邮件的好处就是：非常容易，无须进行任何额外的配置。但代价就是可定制行极低，因为 Mail.app 的偏好设置（Preferences）面板中甚至都没有与 S/MIME 相关的设置项。
 
 Anyway，对于非技术背景同时又想获得加密邮件带来的好处的用户来说，Mail.app 无疑是最好的选择。
@@ -118,3 +120,86 @@ Anyway，对于非技术背景同时又想获得加密邮件带来的好处的�
 Security 状态中的 Signed 和 Encrypted 表明以同时被加密并且签名。现在你可以登录你的邮箱的 web 版看一看，是无法读取这些加密过的邮件的，只有在你所用的邮件客户端上使用自己的 S/MIME 证书的私钥才能解密这些邮件。
 
 ## 在 Mozilla Thunderbird 中使用 S/MIME 证书加密和签名邮件
+
+现在到了最关键的部分，这部分也是想写这篇文章最主要的原因，因为笔者就是 Mozilla Thunderbird 的忠实用户，但是因为 Firefox 和 Thunderbird 在设计上的一些缺陷，为了能够在 Thunderbird 中使用 S/MIME 加密邮件，的确费了一番周折。
+
+Thunderbird 绝对堪称最强大的邮件客户端，其内置了对 S/MIME 的支持，同时可定制性非常高。但是 Thunderbird 和它兄弟 Firefox 一样，有一个广受用户尤其是 OS X 用户诟病的问题：Thunderbird 并不使用 OS X 的钥匙串服务（Keychain Services）管理密码和证书，而是自己实现了密码和证书管理器。这么做可能是因为二者对跨平台的支持，所以自己重新实现密码和证书管理器相对要更容易，但是这也带来了很大的问题，那就是**Thunderbird 无法与 OS X 上的其他应用共享密码和证书**。
+
+这其实就是让我“颇费周折”的原因，我掉进了这个陷阱，折腾了很久才走出来。
+
+首先，打开当前邮箱的账号设置面板：
+
+![thunderbird-1](http://i.imgbox.com/KxeO9dSU.png)
+
+选中当前账号的 `Security` 项：
+
+![thunderbird-2](http://i.imgbox.com/773fUFS9.png)
+
+刚才已经提到了，Thunderbird 不使用 Keychain Services 管理密码和证书，所以我们就要把之前构建证书信任链中的所有步骤在 Thunderbird 自己的证书管理器（certificates manager）中重新做一遍。
+
+选择 `View Certificates` 打开证书管理器：
+
+![thunderbird-3](http://i.imgbox.com/lmICnthu.png)
+
+将自己的 S/MIME 证书（首先要从 Keychain Access 中将该证书导出，这一步很简单，不赘述），然后将该证书导入到 `Your Certificates` 列表中：
+
+![thunderbird-4](http://i.imgbox.com/3oGFG8Sz.png)
+
+点击 `导入`：
+
+导入成功：
+
+![thunderbird-5](http://i.imgbox.com/46YIwk3w.png)
+
+![thunderbird-6](http://i.imgbox.com/NT7d4jei.png)
+
+这时还要将对方的公钥证书导入到 `People` 列表：
+
+不过现在还无法重新导入，可以看到这个错误：
+
+![thunderbird-7](http://i.imgbox.com/OmuBRWQk.png)
+
+这是由于 Thunderbird 自己的 Certificates Manager 与 Keychain Access 的一个区别：正如之前所见，Keychain Access 可以自由地导入一个不被信任的证书，只不过它会在评估结果中以红色字体写成：__“The certificate was signed by an unknown authority”__，但是 Thunderbird 的 Certificate Manager 不可以，向其中导入的证书必须在当前证书数据库中拥有完整的信任链，也就是说必须能够从你的证书追溯到受信任（trusted）的根证书。
+
+所以在导入其他证书之前，我们必须将之前提到的那3个中间证书和1个根证书导入到 Thunderbird 自己的证书管理器中：
+
+---
+切换到 `Authorities` 列表：
+
+![thunderbird-8](http://i.imgbox.com/uyBpbRgU.png)
+
+---
+
+点击 `Import` 按钮，并将事先从 Keychain Access 中导出的三个中间证书导入：
+
+![thunderbird-9](http://i.imgbox.com/2P5bpvNj.png)
+
+---
+
+将三个选项全部勾选：
+
+![thunderbird-10](http://i.imgbox.com/K43AFKrr.png)
+
+同时可以查看一下 `Authorities` 列表中 'C' 开头的项，看看能否找到 Add Trust External CA Root 根证书，如果不能找到，和上面的步骤一样，导出，导入。
+
+现在我们已经在 Thunderbird 自己的 Certificates Manager 中为自由 Comodo Limited 签发的个人 S/MIME 证书构建了完整的信任链，可以重新导入邮件接收者的公钥证书了：
+
+![thunderbird-11](http://i.imgbox.com/fDTskZwi.png)
+
+成功导入。
+
+需要记住的和 Keychain Access 的又一个区别：
+
+在 Certificate Manager 中
+
+* 自己的 S/MIME 证书必须要导入到 `Your Certificates`，该列表的 Import 对话框也只支持导入含有私钥的证书格式：PKCS12(.p12)；
+
+* 对方的 S/MIME 证书（只含有对方的公钥）则只能导入 `People` 列表，该列表的 Import 对话框只支持导入仅含有公钥的证书格式：Certificate(.crt)；
+
+* 中间证书必须导入到 `Authorities` 列表中。
+
+Keychain Access 则没有这么多的区分，可以将任何类型的证书导入到同一个 Keychain 中。
+
+现在就可以使用 Thunderbird 加密和签名邮件了。首先，为你的邮箱账号设置数字签名（digital signing）时默认使用的 S/MIME 证书：
+
+
