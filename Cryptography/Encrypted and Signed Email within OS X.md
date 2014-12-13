@@ -89,4 +89,32 @@ Okay，一切确认无误后，点击 `Next`，准备 collect 你自己的 S/MIM
 
 ## 在 OS X 自带的 Mail 中使用 S/MIME 证书加密和签名邮件
 
+当构建了完整的信任链后，即可开始使用该 S/MIME 证书加密和签名邮件。
+
+OS X 自带有一个 Mail 应用（由于 Mail 名称太过简洁，容易造成歧义，所以在下文中都采用 Mail.app 的名称指代），Mail.app 内置了对 S/MIME 加密的支持，使用 Mail.app 收发 S/MIME 加密邮件的好处就是：非常容易，无须进行任何额外的配置。但代价就是可定制行极低，因为 Mail.app 的偏好设置（Preferences）面板中甚至都没有与 S/MIME 相关的设置项。
+
+Anyway，对于非技术背景同时又想获得加密邮件带来的好处的用户来说，Mail.app 无疑是最好的选择。
+
+注：因为在 Mail.app 中我还没有成功配置 openmailbox.org 的邮箱，所以在这一节中，我将使用 esquiiire@gmail.com 这个邮箱，和使用该邮箱申请的 S/MIME 证书作为演示。sender 邮箱为 esquiiire@gmail.com，receiver 邮箱为 Tuhn-Kuo@outlook.com。
+
+在 Mail.app 中新建邮件，像往常一样撰写一封邮件：
+
+![osx-mail.app-1](http://i.imgbox.com/LjM8YV76.png)
+
+在这里你可以主要到，红框圈上得三个控件都是灰色的禁用状态（disabled）。这是因为，当前默认的钥匙串中还没有与发送者（esquiire@gmail.com）匹配的 S/MIME 证书，Mail.app 就是根据 S/MIME 证书中的邮箱地址来自动识别在加密邮件时应该使用那个证书的，而此时没有匹配的证书，所以无法加密。
+
+现在把我的 S/MIME 加入到钥匙串后（在 OS X 中双击证书文件后即可将其加入到钥匙串中），***重启 Mail.app （这是很必要的一步）***，可以看到，S/MIME 开关变为了蓝色的可用状态（enabled），而加密和签名两个按钮也变为了可用状态：
+
+![osx-mail.app-2](http://i.imgbox.com/XRTgbmA0.png)
+
+这里必须要注意的一点就是，用来加密和签名邮件的 S/MIME 必须同时具有公钥和私钥，也就是说必须是你自己的 S/MIME 证书，而对于那些只有公钥没有私钥的证书（比如你的朋友给你的他的公钥证书），是无法用来加密邮件的。
+
+同时，如果想能够加密发给对方的邮件的话，必须要在钥匙串中拥有对方的 S/MIME 公钥证书，可能是你的朋友导出（export）后给你的，或者是从互联网上获取的。如果没有对方的公钥证书，那么无法进行加密，那个小锁头按钮会一直处于禁用状态，但是可以进行签名。关于这些组合，可以自己试验一下。
+
+当对方接受到邮件后，会看到：
+
+![osx-mail.app-3](http://i.imgbox.com/jCJAyMK4.png)
+
+Security 状态中的 Signed 和 Encrypted 表明以同时被加密并且签名。现在你可以登录你的邮箱的 web 版看一看，是无法读取这些加密过的邮件的，只有在你所用的邮件客户端上使用自己的 S/MIME 证书的私钥才能解密这些邮件。
+
 ## 在 Mozilla Thunderbird 中使用 S/MIME 证书加密和签名邮件
