@@ -235,3 +235,28 @@ Keychain Access 则没有这么多的区分，可以将任何类型的证书导�
 右上角的两个图标表示改该邮件在被发送之前进行了加密和签名。点击它们即可查看发送者的证书信息，并且可以查看邮件的签名状态，即：邮件被签名后，是否被人恶意或无意篡改：
 
 ![thunderbird-19](http://i.imgbox.com/NG7SXQpO.png)
+
+当你希望对方给你发送 S/MIME 加密邮件时，导出你的 S/MIME 证书的公钥部分，让对方存储在自己的证书数据库中即可。关于公钥的交换问题，在 GnuPG 中通过公钥服务器这种形式很方便地解决了，但是 S/MIME 证书在这方面的解决方法，我还不太清楚，没有尝试过。
+
+## 在移动设备上使用 S/MIME
+
+这篇文章是专门介绍在 OS X 上使用 S/MIME 的，关于在 iOS 上使用 S/MIME，参考[这篇文章](http://feinstruktur.com/blog/2011/12/12/using-smime-on-ios-devices.html)。
+
+## Summary
+
+为了测试 S/MIME 加密，我昨晚测试了15款 OS X 上的，10余款 Android 上的以及2款 Windows 上的邮件客户端。
+
+除了 Thunderbird 以及 [Windows Essentials](http://windows.microsoft.com/en-us/windows-live/essentials) 套件中的 [Windows Live Mail](http://windows.microsoft.com/en-us/windows-live/windows-essentials-help#v1h=tab4) 之外，其他的客户端对 S/MIME 的支持都非常简陋或者根本不支持。在 OS X 上以其自带的 Mail.app 为首的邮件客户端，都属于这一类，它们的设计使得 S/MIME 几乎开箱即用，但是功能却非常简陋，简陋到甚至在 Preferences 面板中没有针对 S/MIME 的设置项，对加密邮件时的证书的选择也完全依赖于**将证书中的 attributes 的 Email 域与邮件发送者的邮箱**进行匹配，相同，就使用，不相同，就无法使用。然而在 Thunderbird 中，为 S/MIME 提供了大量定制功能，你可以根据自己的口味定制使用规则（rules），比如为一个邮箱使用与其名称不同的证书，这些在 Mail.app 中是做不到的。
+
+文章中笔者提到的两款邮件客户端，是两种设计的方式，其他的客户端上的配置方式如出一辙。
+
+不管怎么说，加密和签名你的邮件很重要。无论何时何地，在做什么，都要记住：**Big Brother Is WATCHING You.**
+
+## Contact Me
+
+如果你遇到任何问题，你可以给我发送邮件：Tong-G@outlook.com 或者在 Twitter 上 DM 我：[@NSTongG](https://twitter.com/NSTongG)
+
+如果你使用GnuPG的话，也可以给我发送加密数据，我的GnuPG公钥为 0x67B9E95236924648，你可以从公钥服务器上 retrieve 之。
+
+Blog: http://nstongg.tumblr.com
+GitHub: https://github.com/TongG
