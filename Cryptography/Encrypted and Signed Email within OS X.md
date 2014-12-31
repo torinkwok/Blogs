@@ -1,10 +1,17 @@
-邮件安全尤其值得关注，我已经不止一次见到过对邮件**泄漏**，**篡改**或者**伪造**的抱怨，比如：
+之前一直使用 GnuPG 加密和签名邮件，不过前些天抽空折腾了一下用 S/MIME 证书加密和签名邮件，主要涉及到的环境就是 OS X Mavericks，Apple Mail， Mozilla Thunderbird。
 
-![complain](http://i.imgbox.com/VSUkDubY.png)。
+很有意思也很重要的东西，最初使用的时候会碰到不少坑，这也是为什么真正使用邮件加密的人很少，最初的学习曲线很陡峭，配置起来非常麻烦，为了帮助想使用加密邮件的人，写了一篇博客，内容从向 CA 申请免费的 S/MIME 证书，到在 Apple Mail 中傻瓜式地“开箱即用”地使用 S/MIME，再到在 Mozilla Thunderbird 中利用 S/MIME 更强大的特性，尽可能得详细，尽可能得简单，接近手把手，也把我遇到的一些坑讲了一下，减少最初使用的人浪费的时间。
+
+------
+
+邮件安全尤其值得关注，我已经不止一次见到过对邮件**泄漏**，**篡改**或者**伪造**的抱怨和报道，比如：
+
+![complain_1](http://i.imgbox.com/VSUkDubY.png)
+
+再比如：
+![complain_2](http://i.imgbox.com/0dbpgKyi.png)
 
 不管你是什么职业，***学会使用加密邮件，并对邮件进行数字签名从而保证你的邮件不被接收者之外的人读取或恶意篡改***，是每个人应该掌握的技能。这篇文章介绍了在 OS X 上使用 S/MIME 证书对你的邮件进行加密（encrypt）和数字签名（digital signing），相较于使用 GnuPG 收发加密邮件而言，使用 S/MIME 证书对邮件进行加密和签名要更加轻量级，对 GnuPG 的支持还要额外安装插件。此外，移动设备几乎无法使用 GnuPG，很多人又有在移动设备上收发邮件的习惯，而 iOS 和 Android 自带的邮件客户端也内置了 S/MIME 的支持。
-
-关于“我已经不止一次见到过对邮件**泄漏**，**篡改**或者**伪造**的抱怨”，找到了一分存档：
 
 文章中提到的环境或工具：
 
@@ -14,7 +21,7 @@
 * Apple Mail 7.3
 * Google Chrome 39.x
 
-## 向 CA 申请 S/MIME 证书
+#### 向 CA 申请 S/MIME 证书
 如果你已经有了一个由受信任的 CA （如 VeriSign 或 DigiSign等）签发的 S/MIME 证书的话，可以跳过这一节。另外使用 Keychain Access 工具创建的 self-signed 证书只能用于签名邮件，而不能用于加密。
 
 在开始使用 S/MIME 加密和签名邮件之前，需要做的一件事就是向证书颁发机构（Certificate Authority）申请一个 S/MIME 证书，有一些商业的证书签发机构提供为个人用户免费签发 S/MIME 证书的服务，如 Comodo Limited 等，在这篇文章中，我将使用由 Comodo Limited 签发的 S/MIME 证书。
@@ -59,7 +66,7 @@ Okay，一切确认无误后，点击 `Next`，准备 collect 你自己的 S/MIM
 
 ![stored-cert](http://i.imgbox.com/CFZhfgE6.png)
 
-## 为 S/MIME 证书构建信任链（trust chain）
+#### 为 S/MIME 证书构建信任链（trust chain）
 
 你可能已经注意到了，刚刚申请的 S/MIME 证书的评估（evaluate）结果是 __“The certificate was signed by an unknown authority”__：
 
@@ -93,7 +100,7 @@ Okay，一切确认无误后，点击 `Next`，准备 collect 你自己的 S/MIM
 
 这说明已经为你的 S/MIME 证书构建了完整的证书链，它已经准备好开始自己的工作了。
 
-## 在 OS X 自带的 Mail 中使用 S/MIME 证书加密和签名邮件
+#### 在 OS X 自带的 Mail 中使用 S/MIME 证书加密和签名邮件
 
 当构建了完整的信任链后，即可开始使用该 S/MIME 证书加密和签名邮件。
 
@@ -125,7 +132,7 @@ Anyway，对于非技术背景同时又想获得加密邮件带来的好处的�
 
 Security 状态中的 Signed 和 Encrypted 表明以同时被加密并且签名。现在你可以登录你的邮箱的 web 版看一看，是无法读取这些加密过的邮件的，只有在你所用的邮件客户端上使用自己的 S/MIME 证书的私钥才能解密这些邮件。
 
-## 在 Mozilla Thunderbird 中使用 S/MIME 证书加密和签名邮件
+#### 在 Mozilla Thunderbird 中使用 S/MIME 证书加密和签名邮件
 
 现在到了最关键的部分，这部分也是想写这篇文章最主要的原因，因为笔者就是 Mozilla Thunderbird 的忠实用户，但是因为 Firefox 和 Thunderbird 在设计上的一些缺陷，为了能够在 Thunderbird 中使用 S/MIME 加密邮件，的确费了一番周折。
 
@@ -244,11 +251,11 @@ Keychain Access 则没有这么多的区分，可以将任何类型的证书导�
 
 当你希望对方给你发送 S/MIME 加密邮件时，导出你的 S/MIME 证书的公钥部分，让对方存储在自己的证书数据库中即可。关于公钥的交换问题，在 GnuPG 中通过公钥服务器这种形式很方便地解决了，但是 S/MIME 证书在这方面的解决方法，我还不太清楚，没有尝试过。
 
-## 在移动设备上使用 S/MIME
+#### 在移动设备上使用 S/MIME
 
 这篇文章是专门介绍在 OS X 上使用 S/MIME 的，关于在 iOS 上使用 S/MIME，参考[这篇文章](http://feinstruktur.com/blog/2011/12/12/using-smime-on-ios-devices.html)。
 
-## Summary
+#### Summary
 
 为了测试 S/MIME 加密，我昨晚测试了15款 OS X 上的，10余款 Android 上的以及2款 Windows 上的邮件客户端。
 
@@ -258,14 +265,10 @@ Keychain Access 则没有这么多的区分，可以将任何类型的证书导�
 
 不管怎么说，加密和签名你的邮件很重要。无论何时何地，在做什么，都要记住：**Big Brother Is WATCHING You.**
 
-## Contact Me
+#### Contact Me
 
 我已经将文章中使用的截图打包，可以在[这里](https://www.dropbox.com/s/psc2d8v4gytnxa4/Using%20S%3AMIME%20within%20OS%20X_archive.zip?dl=0)下载。
 
 如果你遇到任何问题，你可以给我发送邮件：Tong-G@outlook.com 或者在 Twitter 上 DM 我：[@NSTongG](https://twitter.com/NSTongG)
 
 如果你使用GnuPG的话，也可以给我发送加密数据，我的GnuPG公钥为 0x67B9E95236924648，你可以从公钥服务器上 retrieve 之。
-
-Blog: http://nstongg.tumblr.com
-
-GitHub: https://github.com/TongG
