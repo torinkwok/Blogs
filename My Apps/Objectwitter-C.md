@@ -143,11 +143,11 @@ STTwitterAPI* twitter = [ STTwitterAPI twitterAPIAppOnlyWithConsumerKey: @""
 
 ## Demo/Test Project
 
-在 Objectwitter-C 项目中，在 demo_osx 目录下包含了一个 OS X 上的 demo，这个 demo 演示了一部分 API 的用法，并且还可以允许你选择如何获取 OAuth Tokens（如下图）：
+在 Objectwitter-C 项目中，在 [demo_osx](https://github.com/Twipoker-Project/Objectwitter-C/tree/master/demo_osx) 目录下包含了一个 OS X 上的 demo，这个 demo 演示了一部分 API 的用法，并且还可以允许你选择如何获取 OAuth Tokens（如下图）：
 
 ![osx_demo1](https://github.com/Twipoker-Project/Objectwitter-C/raw/master/Art/osx.png)
 
-一旦你成功获取了 OAuth Tokens，你就可以马上使用这个简易的客户端获取你的时间轴并且发一些推文了。同时，项目中还有一个 iOS 的 demo：
+一旦你成功获取了 OAuth Tokens，你就可以马上使用这个简易的客户端获取你的时间轴并且发一些推文了。同时，项目中还有一个 [iOS 的 demo](https://github.com/Twipoker-Project/Objectwitter-C/tree/master/demo_ios)：
 
 ![ios_demo1](https://github.com/Twipoker-Project/Objectwitter-C/raw/master/Art/ios.png)
 
